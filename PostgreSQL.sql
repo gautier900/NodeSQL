@@ -8,8 +8,6 @@ CREATE TABLE utilisateurs (
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
---
-
 CREATE INDEX idx_utilisateurs_email ON utilisateurs(email);
 CREATE INDEX idx_utilisateurs_actif ON utilisateurs(actif);
 
