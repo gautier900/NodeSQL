@@ -166,3 +166,12 @@ JOIN roles r ON ur.role_id = r.id
 WHERE r.nom IN ('admin', 'moderator')
 GROUP BY u.id, u.email
 HAVING COUNT(DISTINCT r.nom) = 2;
+
+SELECT
+ DATE(date_heure) AS jour,
+ COUNT(*) AS tentatives_echouees
+FROM logs_connexion
+WHERE succes = false
+ AND date_heure >= CURRENT_DATE - INTERVAL '7 days'
+GROUP BY DATE(date_heure)
+ORDER BY jour DESC;
