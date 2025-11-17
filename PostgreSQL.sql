@@ -123,6 +123,21 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION est_token_valide(p_token VARCHAR)
+RETURNS BOOLEAN AS $$
+BEGIN
+    RETURN EXISTS (
+        SELECT 1
+        FROM sessions s
+        INNER JOIN utilisateurs u ON s.utilisateur_id = u.id
+        WHERE s.token = p_token
+          AND s.actif = true
+          AND s.date_expiration > CURRENT_TIMESTAMP
+          AND u.actif = true
+    );
+END;
+$$ LANGUAGE plpgsql;
+
 SELECT
     u.id,
     u.email,

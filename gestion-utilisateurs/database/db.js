@@ -4,7 +4,8 @@ require("dotenv").config();
 
 const pool = new Pool({
   user: process.env.DB_USER,
-  host: process.env.DB_HOST,
+  // Utiliser socket Unix au lieu de TCP/IP pour éviter l'authentification par mot de passe
+  host: process.env.DB_HOST === 'localhost' ? '/var/run/postgresql' : process.env.DB_HOST,
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
